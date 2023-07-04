@@ -1,0 +1,9 @@
+FROM golang:buster as builder
+RUN mkdir /app
+COPY main.go /app/
+WORKDIR /app
+RUN CGO_ENABLED=0 go build -o go-echo main.go
+
+FROM alpine:3.15
+COPY --from=builder /app/go-echo /
+ENTRYPOINT ["/go-echo"]
