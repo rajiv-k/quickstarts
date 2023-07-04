@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  foo:
+    build:
+      context: ../go-echo
+      dockerfile: ../go-echo/Dockerfile.echo
+    container_name: foo
+    expose:
+      - 9000
+    environment:
+      HOST_ID: foo-1
+    networks:
+      - skynet
+  bar:
+    build:
+      context: ../go-echo
+      dockerfile: ../go-echo/Dockerfile.echo
+    container_name: bar
+    expose:
+      - 9000
+    environment:
+      HOST_ID: bar-1
+    networks:
+      - skynet
+  envoy:
+    image: envoyproxy/envoy:v1.26-latest
+    container_name: envoy
+    ports:
+      - "9999:8080"
+    volumes:
+      - "${PWD}/envoy.yaml:/etc/envoy/envoy.yaml"
+    networks:
+      - skynet
+    depends_on:
+      - foo
+      - bar
+networks:
+  skynet:
