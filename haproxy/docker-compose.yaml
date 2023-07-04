@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  foo:
+    build:
+      context: ../go-echo
+      dockerfile: ../go-echo/Dockerfile.echo
+    container_name: foo
+    expose:
+      - 9000
+    environment:
+      HOST_ID: foo-1
+    networks:
+      - skynet
+  bar:
+    build:
+      context: ../go-echo
+      dockerfile: ../go-echo/Dockerfile.echo
+    container_name: bar
+    expose:
+      - 9000
+    environment:
+      HOST_ID: bar-1
+    networks:
+      - skynet
+  haproxy:
+    image: haproxy:2.8
+    container_name: haproxy
+    ports:
+      - "9999:8080"
+    volumes:
+      - "${PWD}/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
+    networks:
+      - skynet
+    depends_on:
+      - foo
+      - bar
+networks:
+  skynet:
