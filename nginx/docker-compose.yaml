@@ -2,8 +2,8 @@ version: "3.9"
 services:
   foo:
     build:
-      context: .
-      dockerfile: Dockerfile.echo
+      context: ../go-echo
+      dockerfile: ../go-echo/Dockerfile.echo
     container_name: foo
     expose:
       - 9000
@@ -13,8 +13,8 @@ services:
       - skynet
   bar:
     build:
-      context: .
-      dockerfile: Dockerfile.echo
+      context: ../go-echo
+      dockerfile: ../go-echo/Dockerfile.echo
     container_name: bar
     expose:
       - 9000
