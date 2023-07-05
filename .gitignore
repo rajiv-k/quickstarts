@@ -2,3 +2,10 @@
 .idea
 *.log
 **/*.bak
+*.bin
+*.dll
+*.so
+*.dylib
+
+# Go workspace file
+*.work
