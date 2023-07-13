@@ -20,11 +20,12 @@ var (
 )
 
 type Resp struct {
-	StatusCode int    `json:"status_code"`
-	Method     string `json:"method"`
-	URI        string `json:"uri"`
-	Client     string `jsont:"client"`
-	HostID     string `json:"host_id"`
+	StatusCode     int                 `json:"status_code"`
+	Method         string              `json:"method"`
+	URI            string              `json:"uri"`
+	Client         string              `jsont:"client"`
+	HostID         string              `json:"host_id"`
+	RequestHeaders map[string][]string `json:"request_headers"`
 }
 
 func main() {
@@ -52,11 +53,12 @@ func echoHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	resp := Resp{
-		StatusCode: http.StatusOK,
-		Method:     r.Method,
-		URI:        r.RequestURI,
-		Client:     r.RemoteAddr,
-		HostID:     hostID,
+		StatusCode:     http.StatusOK,
+		Method:         r.Method,
+		URI:            r.RequestURI,
+		Client:         r.RemoteAddr,
+		HostID:         hostID,
+		RequestHeaders: r.Header,
 	}
 	if err := json.NewEncoder(w).Encode(resp); err != nil {
 		fmt.Printf("ERROR: could not encode response: %v\n", err)
