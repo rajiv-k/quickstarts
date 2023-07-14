@@ -3,6 +3,7 @@
 *.log
 **/*.bak
 *.bin
+go-echo/go-echo
 *.dll
 *.so
 *.dylib
