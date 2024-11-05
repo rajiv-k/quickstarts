@@ -35,7 +35,7 @@ func main() {
 	hostID = os.Getenv("HOST_ID")
 
 	router := &http.ServeMux{}
-	router.HandleFunc("/echo", echoHandler)
+	router.HandleFunc("/echo/{suffix...}", echoHandler)
 
 	listener, err := createListener(unixSocketPath)
 	if err != nil {
